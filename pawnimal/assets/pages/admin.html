@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+
+  <a href="/pawnimal/index.html" class="logo">PawNimal</a>
+  <style>
+    /* Admin Panel Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #c1c1c2;
+    }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-title {
+      font-size: 2em;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .admin-section {
+      margin-bottom: 30px;
+    }
+
+    .admin-section h2 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table th,
+    table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    table button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-ban {
+      background-color: #dc3545;
+      color: #fff;
+      display: inline-block;
+    }
+
+    .btn-ban:hover {
+      background-color: #c82333;
+    }
+
+    .btn-approve {
+      background-color: #28a745;
+      color: #fff;
+      display: inline-block;
+    }
+
+    .btn-approve:hover {
+      background-color: #218838;
+    }
+
+    .btn-delete {
+      background-color: #ffc107;
+      color: #333;
+      display: inline-block;
+    }
+
+    .btn-delete:hover {
+      background-color: #e0a800;
+    }
+
+    .admin-section h2 {
+      background-color: #f0f0f0;
+      padding: 10px;
+      margin: 0;
+      border: 1px solid #ddd;
+    }
+
+    .admin-section h2:hover {
+      background-color: #e0e0e0;
+    }
+
+    .collapsible-content {
+      overflow: hidden;
+      height: 0;
+      transition: height 0.3s ease-out;
+    }
+
+    .collapsible-content.expanded {
+      height: auto;
+    }
+
+    .prev-button{
+      background-color: #007bff;
+      color: white;
+      padding: 2px 2px px 5px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .next-button {
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="admin-container">
+    <h1 class="admin-title">Admin Panel</h1>
+
+    <!-- Search Bar -->
+    <div style="margin-bottom: 20px;">
+      <input type="text" id="searchInput" placeholder="Search..."
+        style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px;" />
+    </div>
+
+    <!-- Manage Users Section -->
+    <div class="admin-section">
+      <h2>Manage Users</h2>
+      <div>
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td>U123</td>
+              <td>John Abel</td>
+              <td>john@gmail.com</td>
+              <td>Active</td>
+              <td>
+                <button class="btn-ban" onclick="banUser('U123')">Ban</button>
+                <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U124</td>
+              <td>abelijeans</td>
+              <td>abel@gmail.com</td>
+              <td>Banned</td>
+              <td>
+                <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U125</td>
+              <td>Diwata Pares</td>
+              <td>diwata@gmail.com</td>
+              <td>Active</td>
+              <td>
+                <button class="btn-ban" onclick="banUser('U123')">Ban</button>
+                <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px;">
+          <button class="prev-button" id="prevButton" style="padding: 10px 20px; margin-right: 10px;">Previous</button>
+          <button class="next-button" id="nextButton" style="padding: 10px 20px;">Next</button>
+        </div>
+      </div>
+
+      <!-- Manage Vendors Section -->
+      <div class="admin-section">
+        <h2>Manage Vendors</h2>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>V101</td>
+                <td>Vendor One</td>
+                <td>vendor1@gmail.com</td>
+                <td>Active</td>
+                <td>
+                  <button class="btn-ban" onclick="banVendor('V101')">Ban</button>
+                  <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="text-align: center; margin-top: 20px;">
+            <button class="prev-button" id="prevButton" style="padding: 10px 20px; margin-right: 10px;">Previous</button>
+            <button class="next-button" id="nextButton" style="padding: 10px 20px;">Next</button>
+          </div>
+        </div>
+
+        <!-- Manage Products Section -->
+        <div class="admin-section">
+          <h2>Products Waiting for Approval</h2>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>P2001</td>
+                  <td>Dog Food - energizer</td>
+                  <td>Vendor One</td>
+                  <td>Pending</td>
+                  <td>
+                    <button class="btn-approve" onclick="approveProduct(this)">Approve</button>
+                    <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>P2002</td>
+                  <td>Shrimp Pellet or sum</td>
+                  <td>Vendor One</td>
+                  <td>Pending</td>
+                  <td>
+                    <button class="btn-approve" onclick="approveProduct(this)">Approve</button>
+                    <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="text-align: center; margin-top: 20px;">
+              <button class="prev-button" id="prevButton" style="padding: 10px 20px; margin-right: 10px;">Previous</button>
+              <button class="next-button" id="nextButton" style="padding: 10px 20px;">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          // Manage Users
+          function banUser(userId) {
+            alert(`User ${userId} has been banned.`);
+            // Logic to update user status
+          }
+
+          function deleteUser(userId) {
+            const confirmDelete = confirm(`Are you sure you want to delete User ${userId}?`);
+            if (confirmDelete) {
+              alert(`User ${userId} has been deleted.`);
+              // Logic to delete user
+            }
+          }
+
+          // Manage Vendors
+          function banVendor(vendorId) {
+            alert(`Vendor ${vendorId} has been banned.`);
+            // Logic to update vendor status
+          }
+
+          function removeItem(button) {
+            const confirmDelete = confirm("Are you sure you want to remove this item?");
+            if (confirmDelete) {
+              const row = button.closest('tr'); // Find the closest table row
+              row.remove(); // Remove the row from the table
+              alert("Item has been removed.");
+            }
+          }
+
+
+          function approveProduct(button) {
+            const confirmApproval = confirm("Are you sure you want to approve this product?");
+            if (confirmApproval) {
+              const row = button.closest('tr'); // Find the closest table row
+              row.remove(); // Remove the row from the table
+              alert("Product has been approved.");
+            }
+          }
+
+
+          function deleteProduct(productId) {
+            const confirmDelete = confirm(`Are you sure you want to delete Product ${productId}?`);
+            if (confirmDelete) {
+              alert(`Product ${productId} has been deleted.`);
+              // Logic to delete product
+            }
+          }
+
+          //for dropdown
+          document.addEventListener("DOMContentLoaded", function () {
+            const headers = document.querySelectorAll(".admin-section h2");
+
+            headers.forEach(header => {
+              header.style.cursor = "pointer"; // Indicate clickable header
+              const content = header.nextElementSibling;
+
+              if (content) {
+                // Add collapsible class and calculate initial height
+                content.classList.add("collapsible-content");
+
+                header.addEventListener("click", function () {
+                  if (content.classList.contains("expanded")) {
+                    // Collapse
+                    content.style.height = content.scrollHeight + "px"; // Set to current height
+                    requestAnimationFrame(() => {
+                      content.style.height = "0";
+                    });
+                    content.classList.remove("expanded");
+                  } else {
+                    // Expand
+                    content.style.height = content.scrollHeight + "px";
+                    content.classList.add("expanded");
+                    setTimeout(() => {
+                      content.style.height = "auto"; // Reset height to auto after transition
+                    }, 300); // Match transition duration
+                  }
+                });
+              }
+            });
+          });
+
+          document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("searchInput");
+            const tables = document.querySelectorAll("table");
+
+            searchInput.addEventListener("keyup", function () {
+              const filter = searchInput.value.toLowerCase();
+
+              tables.forEach(table => {
+                const rows = table.getElementsByTagName("tr");
+
+                for (let i = 1; i < rows.length; i++) { // Skip table headers
+                  const row = rows[i];
+                  const cells = row.getElementsByTagName("td");
+                  let match = false;
+
+                  for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().includes(filter)) {
+                      match = true;
+                      break;
+                    }
+                  }
+
+                  row.style.display = match ? "" : "none";
+                }
+              });
+            });
+          });
+
+          document.addEventListener("DOMContentLoaded", function () {
+            const rowsPerPage = 5;
+            let currentPage = 1;
+
+            const tableBody = document.getElementById("usersTableBody");
+            const rows = [
+              { id: "U123", username: "John Abel", email: "john@gmail.com", status: "Active" },
+              { id: "U124", username: "abelijeans", email: "abel@gmail.com", status: "Banned" },
+              { id: "U125", username: "Diwata Pares", email: "diwata@gmail.com", status: "Active" },
+              { id: "U126", username: "Alice Doe", email: "alice@gmail.com", status: "Active" },
+              { id: "U127", username: "Bob Smith", email: "bob@gmail.com", status: "Active" },
+              { id: "U128", username: "Charlie Brown", email: "charlie@gmail.com", status: "Banned" },
+              { id: "U129", username: "Daisy Johnson", email: "daisy@gmail.com", status: "Active" },
+              { id: "U130", username: "Eve Torres", email: "eve@gmail.com", status: "Active" },
+              { id: "U131", username: "Frank Wright", email: "frank@gmail.com", status: "Active" },
+              { id: "U132", username: "Grace Lee", email: "grace@gmail.com", status: "Active" },
+              { id: "U133", username: "Hank Pym", email: "hank@gmail.com", status: "Active" },
+              // Add more rows as needed
+            ];
+
+            const prevButton = document.getElementById("prevButton");
+            const nextButton = document.getElementById("nextButton");
+
+            function renderTable() {
+              tableBody.innerHTML = ""; // Clear table body
+              const start = (currentPage - 1) * rowsPerPage;
+              const end = start + rowsPerPage;
+              const pageRows = rows.slice(start, end);
+
+              pageRows.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+            <td>${row.id}</td>
+            <td>${row.username}</td>
+            <td>${row.email}</td>
+            <td>${row.status}</td>
+            <td>
+              <button class="btn-ban" onclick="banUser('${row.id}')">Ban</button>
+              <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+            </td>
+          `;
+                tableBody.appendChild(tr);
+              });
+
+              // Enable/disable pagination buttons
+              prevButton.disabled = currentPage === 1;
+              nextButton.disabled = end >= rows.length;
+            }
+
+            prevButton.addEventListener("click", function () {
+              if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+              }
+            });
+
+            nextButton.addEventListener("click", function () {
+              if (currentPage * rowsPerPage < rows.length) {
+                currentPage++;
+                renderTable();
+              }
+            });
+
+            renderTable(); // Initial render
+          });
+        </script>
+
+</body>
+
+</html>

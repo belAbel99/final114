@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bangers&family=Carter+One&family=Nunito+Sans:wght@400;700&display=swap"
+    rel="stylesheet">
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Form</title>
+  <script>
+    function registerUser(event) {
+      event.preventDefault();
+
+      // Get user inputs
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!username || !email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Check if user already exists
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const userExists = users.some(user => user.email === email);
+      if (userExists) {
+        alert("User already exists with this email.");
+        return;
+      }
+
+      // Add new user to the database
+      users.push({ username, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert("Registration successful! You can now log in.");
+      window.location.href = './login.html';
+    }
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #4eec96d0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    form h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    form input {
+      width: 378px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    form button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background: #0056b3;
+    }
+
+    .account-options {
+      margin-bottom: 10px;
+      background-color: rgb(0, 106, 255);
+      color: white;
+      padding: 5px 5px 5px 5px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <form onsubmit="registerUser(event)">
+    <h2>Register</h2>
+    <label for="username">Username</label>
+    <input type="text" id="username" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" required>
+    <label for="account-type">Account Type</label>
+    <select class="account-options" id="account-type" name="account_type" required>
+      <option value="" disabled selected>Select Account Type</option>
+      <option value="user">User Account</option>
+      <option value="vendor">Vendor Account</option>
+    </select>
+    
+    <button type="submit">Register</button>
+    </form>
+
+</body>
+</html>

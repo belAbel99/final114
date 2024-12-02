@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+
+  <a href="/pawnimal/index.html" class="logo">PawNimal</a>
+  <style>
+    /* Admin Panel Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #212122;
+    }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-title {
+      font-size: 2em;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .admin-section {
+      margin-bottom: 30px;
+    }
+
+    .admin-section h2 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table th,
+    table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    table button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-ban {
+      background-color: #dc3545;
+      color: #fff;
+      display: inline-block;
+    }
+
+    .btn-ban:hover {
+      background-color: #c82333;
+    }
+
+    .btn-delete {
+      background-color: #ffc107;
+      color: #333;
+      display: inline-block;
+    }
+
+    .btn-delete:hover {
+      background-color: #e0a800;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="admin-container">
+    <h1 class="admin-title">Admin Panel</h1>
+
+    <!-- Manage Users Section -->
+    <div class="admin-section">
+      <h2>Manage Users</h2>
+      <div>
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <!-- User rows will be dynamically rendered here -->
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination Controls -->
+      <div style="text-align: center; margin-top: 20px;">
+        <button id="prevButton" style="padding: 10px 20px; margin-right: 10px;">Previous</button>
+        <button id="nextButton" style="padding: 10px 20px;">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const rowsPerPage = 6;
+      let currentPage = 1;
+
+      const tableBody = document.getElementById("usersTableBody");
+      const rows = [
+        { id: "U123", username: "John Abel", email: "john@gmail.com", status: "Active" },
+        { id: "U124", username: "abelijeans", email: "abel@gmail.com", status: "Banned" },
+        { id: "U125", username: "Diwata Pares", email: "diwata@gmail.com", status: "Active" },
+        { id: "U126", username: "Alice Doe", email: "alice@gmail.com", status: "Active" },
+        { id: "U127", username: "Bob Smith", email: "bob@gmail.com", status: "Active" },
+        { id: "U128", username: "Charlie Brown", email: "charlie@gmail.com", status: "Banned" },
+        { id: "U129", username: "Daisy Johnson", email: "daisy@gmail.com", status: "Active" },
+        { id: "U130", username: "Eve Torres", email: "eve@gmail.com", status: "Active" },
+        { id: "U131", username: "Frank Wright", email: "frank@gmail.com", status: "Active" },
+        { id: "U132", username: "Grace Lee", email: "grace@gmail.com", status: "Active" },
+        { id: "U133", username: "Hank Pym", email: "hank@gmail.com", status: "Active" },
+        // Add more rows as needed
+      ];
+
+      const prevButton = document.getElementById("prevButton");
+      const nextButton = document.getElementById("nextButton");
+
+      function renderTable() {
+        tableBody.innerHTML = ""; // Clear table body
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pageRows = rows.slice(start, end);
+
+        pageRows.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.id}</td>
+            <td>${row.username}</td>
+            <td>${row.email}</td>
+            <td>${row.status}</td>
+            <td>
+              <button class="btn-ban" onclick="banUser('${row.id}')">Ban</button>
+              <button class="btn-delete" onclick="removeItem(this)">Delete</button>
+            </td>
+          `;
+          tableBody.appendChild(tr);
+        });
+
+        // Enable/disable pagination buttons
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = end >= rows.length;
+      }
+
+      prevButton.addEventListener("click", function () {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      });
+
+      nextButton.addEventListener("click", function () {
+        if (currentPage * rowsPerPage < rows.length) {
+          currentPage++;
+          renderTable();
+        }
+      });
+
+      renderTable(); // Initial render
+    });
+
+    function banUser(userId) {
+      alert(`User ${userId} has been banned.`);
+    }
+
+    function removeItem(button) {
+      const row = button.closest("tr");
+      row.remove();
+    }
+  </script>
+
+</body>
+
+</html>

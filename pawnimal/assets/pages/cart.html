@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <a href="/pawnimal/index.html" class="logo">PawNimal</a>
+
+  <style>
+    /* Cart Page Styles */
+    body {
+        
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #68e6a7b6;
+    }
+    .cart-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .cart-title {
+      font-size: 2em;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .cart-table th, .cart-table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    .cart-table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .cart-table img {
+      width: 100px;
+      border-radius: 8px;
+    }
+    .cart-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-actions .total {
+      font-size: 1.5em;
+      color: #28a745;
+    }
+    .cart-actions .btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .cart-actions .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cart Container -->
+  <div class="cart-container">
+    <h1 class="cart-title">Your Shopping Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- Cart items will be dynamically inserted here -->
+      </tbody>
+    </table>
+
+    <div class="cart-actions">
+        <span id="cart-total" class="total"></span>
+        <button class="btn" onclick="window.location.href='checkout.html';">Proceed to Checkout</button>
+      </div>
+      
+  </div>
+
+  <script>
+    function displayCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartTotalElement = document.getElementById('cart-total');
+  
+      cartItemsContainer.innerHTML = ""; // Clear previous cart items
+      let total = 0;
+  
+      cart.forEach((item, index) => {
+        const row = document.createElement('tr');
+        total += item.price * item.quantity;
+  
+        row.innerHTML = `
+          <td>${item.productName}</td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>
+            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+          </td>
+          <td>$${(item.price * item.quantity).toFixed(2)}</td>
+          <td>
+            <button onclick="removeFromCart(${index})">Remove</button>
+          </td>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+  
+      cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
+    }
+  
+    function updateQuantity(index, newQuantity) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].quantity = parseInt(newQuantity, 10);
+      localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart
+      displayCart(); // Refresh the cart display
+    }
+  
+    function removeFromCart(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1); // Remove the item from the cart
+      localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart
+      displayCart(); // Refresh the cart display
+    }
+      // Initialize the cart page
+  window.onload = displayCart;
+  </script>
+
+</body>
+</html>

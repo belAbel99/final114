@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bangers&family=Carter+One&family=Nunito+Sans:wght@400;700&display=swap"
+    rel="stylesheet">
+
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - Purus consequat congue sit</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <a href="/pawnimal/index.html" class="logo">PawNimal</a>
+
+  <style>
+    /* Specific styling for product details page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #68e6a7b6;
+    }
+    .product-details-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 20px;
+    }
+    .product-image {
+      flex: 1;
+      text-align: center;
+    }
+    .product-image img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .product-info {
+      flex: 2;
+    }
+    .product-info h1 {
+      color: #007bff;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .product-info .price {
+      font-size: 1.5em;
+      color: #28a745;
+      margin: 10px 0;
+    }
+    .product-info p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .product-info input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .product-info .btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .product-info .btn:hover {
+      background-color: #0056b3;
+    }
+            /* Feedback and Reviews Section Styling */
+            .reviews-section {
+              margin-top: 40px;
+              padding: 20px;
+              background: #f9f9f9;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            }
+            .reviews-section h2 {
+              font-size: 1.8em;
+              margin-bottom: 15px;
+            }
+            .reviews-list {
+              list-style: none;
+              padding: 0;
+              margin: 20px 0;
+            }
+            .reviews-list li {
+              border-bottom: 1px solid #ddd;
+              padding: 10px 0;
+            }
+            .reviews-list li:last-child {
+              border-bottom: none;
+            }
+            .review-item {
+              font-size: 1em;
+              color: #333;
+            }
+            .review-author {
+              font-weight: bold;
+              margin-bottom: 5px;
+              display: block;
+            }
+            .review-form {
+              margin-top: 20px;
+            }
+            .review-form textarea {
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              resize: none;
+            }
+            .review-form input[type="text"] {
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+            }
+            .review-form button {
+              padding: 10px 20px;
+              background-color: #007bff;
+              color: #fff;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              transition: background-color 0.3s;
+            }
+            .review-form button:hover {
+              background-color: #0056b3;
+            }
+  </style>
+</head>
+<body>
+      <!-- Header Section -->
+      <div class="cart-header">
+        <p class="welcome-message" id="welcome-message"></p>
+      </div>
+
+  <div class="product-details-container">
+    <div class="product-image">
+      <img src="../../assets/images/product-2.jpg" alt="Purus consequat congue sit">
+    </div>
+    <div class="product-info">
+      <h1>Shrimp Pellets or sum</h1>
+      <p class="price">450.00</p>
+      <p>
+        This product offers exceptional quality and reliability, making it an excellent choice for anyone looking for value and functionality.
+      </p>
+      <form>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="1">
+        <button type="button" class="btn" onclick="addToCart()">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+ <!-- Reviews and Feedback Section -->
+ <div class="reviews-section">
+  <h2>Customer Feedback & Reviews</h2>
+  
+  <!-- Reviews List -->
+  <ul class="reviews-list" id="reviews-list">
+    <li>
+      <span class="review-author">John Abel</span>
+      <span class="review-item">Goods kaayo boss, manumbag na akoang iro haha</span>
+    </li>
+    <li>
+      <span class="review-author">abelijeans</span>
+      <span class="review-item">nag laway gamay akoang iro boss pero buhi paman nuon haha</span>
+    </li>
+    <li>
+      <span class="review-author">Diwata Pares</span>
+      <span class="review-item">pwede man diay ni sa pares boss, gi ganahan akoang mga suki. will buy again hehe</span>
+    </li>
+  </ul>
+
+  <!-- Feedback Form -->
+  <form class="review-form" onsubmit="submitReview(event)">
+    <input type="text" id="review-author" placeholder="Your Name" required>
+    <textarea id="review-text" rows="4" placeholder="Write your review here..." required></textarea>
+    <button type="submit">Submit Review</button>
+  </form>
+</div>
+  <script>
+    function displayUser() {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!loggedInUser) {
+        alert("You must be logged in to view this page.");
+        window.location.href = '../../assets/pages/login.html';
+        return;
+      }
+      document.getElementById('welcome-message').textContent = `Hello, ${loggedInUser.username}!`;
+    }
+    // Add product to the logged-in user's cart
+    function addToCart() {
+      const quantity = parseInt(document.getElementById('quantity').value, 10);
+      const product = {
+        productName: "Shrimp Pellet",
+        price: 450.00,
+        quantity,
+      };
+  
+      // Retrieve the cart from localStorage or initialize it
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+      // Check if the product already exists in the cart
+      const existingProduct = cart.find(item => item.productName === product.productName);
+      if (existingProduct) {
+        existingProduct.quantity += quantity; // Update the quantity
+      } else {
+        cart.push(product); // Add the product to the cart
+      }
+  
+      // Save the updated cart back to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${product.productName} has been added to your cart!`);
+    }
+    
+    function submitReview(event) {
+      event.preventDefault(); // Prevent the form from refreshing the page
+
+      // Get the input values
+      const author = document.getElementById('review-author').value.trim();
+      const review = document.getElementById('review-text').value.trim();
+
+      if (author && review) {
+        // Create a new review element
+        const reviewList = document.getElementById('reviews-list');
+        const newReview = document.createElement('li');
+        newReview.innerHTML = `
+          <span class="review-author">${author}</span>
+          <span class="review-item">${review}</span>
+        `;
+        reviewList.appendChild(newReview); // Add the new review to the list
+
+        // Clear the form
+        document.getElementById('review-author').value = '';
+        document.getElementById('review-text').value = '';
+
+        alert('Thank you for your feedback!');
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+  </script>
+</body>
+</html>

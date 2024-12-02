@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Product - PawNimal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    .product-edit-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .product-edit-container h2 {
+      color: #007bff;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input[type="text"], textarea, input[type="file"] {
+      width: 578px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .image-preview {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+    .image-preview img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-edit-container">
+    <h2>Edit Product</h2>
+    <form id="product-edit-form">
+      <label for="product-name">Product Name:</label>
+      <input type="text" id="product-name" required>
+      
+      <label for="product-price">Price:</label>
+      <input type="text" id="product-price" required>
+      
+      <label for="product-description">Description:</label>
+      <textarea id="product-description" rows="4" required></textarea>
+      
+      <label for="product-image">Product Image(s):</label>
+      <input type="file" id="product-image" accept="image/*" multiple>
+      <div class="image-preview" id="image-preview"></div>
+      
+      <button type="button" onclick="saveProductDetails()">Save Changes</button>
+    </form>
+  </div>
+
+  <script>
+    const productDetails = JSON.parse(localStorage.getItem('selectedProduct')) || { images: [] };
+
+    // Pre-fill form with product details
+    document.getElementById('product-name').value = productDetails.name || '';
+    document.getElementById('product-price').value = productDetails.price || '';
+    document.getElementById('product-description').value = productDetails.description || '';
+
+    const imagePreview = document.getElementById('image-preview');
+
+    // Display existing images
+    function renderImages() {
+      imagePreview.innerHTML = '';
+      (productDetails.images || []).forEach((image, index) => {
+        const imgElement = document.createElement('img');
+        imgElement.src = image;
+        imgElement.alt = `Product Image ${index + 1}`;
+        imagePreview.appendChild(imgElement);
+      });
+    }
+    renderImages();
+
+    // Handle new image uploads
+    document.getElementById('product-image').addEventListener('change', (event) => {
+      const files = event.target.files;
+      Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          productDetails.images.push(e.target.result);
+          renderImages();
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    function saveProductDetails() {
+      // Update localStorage
+      productDetails.name = document.getElementById('product-name').value;
+      productDetails.price = document.getElementById('product-price').value;
+      productDetails.description = document.getElementById('product-description').value;
+
+      localStorage.setItem('selectedProduct', JSON.stringify(productDetails));
+      alert('Product details saved successfully!');
+      window.location.href = 'vendor.html'; // Redirect to the vendor.html page
+    }
+  </script>
+</body>
+</html>

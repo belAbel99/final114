@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Products - PawNimal</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <a href="/pawnimal/index.html" class="logo">PawNimal</a>
+
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fafb;
+    }
+
+    /* Header Styling */
+    .header {
+      background-color: #007bff;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header .logo {
+      color: #fff;
+      font-size: 1.6em;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .header .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .header .navbar a:hover {
+      color: #ff5a5f;
+    }
+
+    .navbar-action-btn {
+      background-color: #ff5a5f;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar-action-btn:hover {
+      background-color: #ff3d44;
+    }
+
+    /* Main Dashboard Container */
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 30px;
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-header h1 {
+      color: #333;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+
+    .dashboard-header p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    /* Section Styles */
+    .dashboard-section {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .dashboard-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-section h2 {
+      margin-top: 0;
+      color: #007bff;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    /* Form Styles */
+    form#product-form {
+      display: grid;
+      gap: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    input[type="file"]:focus {
+      border-color: #007bff;
+    }
+
+    button[type="submit"] {
+      padding: 12px 20px;
+      font-size: 1.1em;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #005bb5;
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th,
+    table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.1em;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+      font-size: 1em;
+      cursor: pointer;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s, transform 0.3s ease;
+    }
+
+    .action-btn.edit {
+      background-color: #ff5a5f;
+      color: white;
+    }
+
+    .action-btn.delete {
+      background-color: #ff6666;
+      color: white;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .action-btn.edit:hover {
+      background-color: #ff3d44;
+    }
+
+    .action-btn.delete:hover {
+      background-color: #ff4040;
+    }
+
+    /* Navbar Items */
+    .navbar-manage-product,
+    .navbar-shop,
+    .navbar-contact,
+    .navbar-home {
+      display: inline-block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        width: 100%;
+        padding: 15px;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+        font-size: 1em;
+      }
+
+      .dashboard-header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Section -->
+  <header class="header" data-header>
+    <div class="container">
+      <a href="../../index.html" class="logo">PawNimal</a>
+      <nav class="navbar">
+        <a class="navbar-home" href="../../index.html">Home</a>
+        <a class="navbar-shop" href="../../shop.html">Shop</a>
+        <a class="navbar-contact" href="../../contact.html">Contact</a>
+        <a href="../../login.html" class="navbar-action-btn">Log Out</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Container -->
+  <main class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>Manage Your Products</h1>
+      <p>Your products to your store.</p>
+    </div>
+
+    <!-- Section for Managing Products -->
+    <section id="manage-products" class="dashboard-section">
+      <h2>Manage Products</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="product-list">
+          <!-- Products will be dynamically loaded here -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section for Listing Products -->
+    <section id="list-products" class="dashboard-section">
+      <h2>List New Product</h2>
+      <form id="product-form">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" name="product-name" required>
+
+        <label for="product-price">Price:</label>
+        <input type="text" id="product-price" name="product-price" required>
+
+        <label for="product-description">Description:</label>
+        <textarea id="product-description" name="product-description" rows="4" required></textarea>
+
+        <label for="product-image">Product Image:</label>
+        <input type="file" id="product-image" name="product-image" accept="image/*">
+
+        <button type="submit" class="btn">Submit Product</button>
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    const products = [
+      { id: 1, name: "Dog Food - Energizer", price: "150.00", description: "Top-quality comfort and style for your pet." },
+      { id: 2, name: "Fishtender", price: "450.00", description: "Premium quality fish food." }
+    ];
+
+    // Render product list
+    const productList = document.getElementById('product-list');
+    function renderProducts() {
+      productList.innerHTML = ''; // Clear existing rows
+      products.forEach((product) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <a href="#" onclick="viewProductDetails(${product.id})">${product.name}</a>
+          </td>
+          <td>${product.price}</td>
+          <td>
+            <button onclick="viewProductDetails(${product.id})" class="action-btn edit">View Details</button>
+            <button onclick="deleteProduct(${product.id})" class="action-btn delete">Delete</button>
+          </td>
+        `;
+        productList.appendChild(row);
+      });
+    }
+
+    // Delete product function
+    function deleteProduct(productId) {
+      const productIndex = products.findIndex(p => p.id === productId);
+      if (productIndex !== -1) {
+        products.splice(productIndex, 1); // Remove product from array
+        renderProducts(); // Re-render the product list
+      }
+    }
+
+    // Add new product from form
+    document.getElementById('product-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const productName = document.getElementById('product-name').value;
+      const productPrice = document.getElementById('product-price').value;
+      const productDescription = document.getElementById('product-description').value;
+
+      const newProduct = {
+        id: products.length + 1,
+        name: productName,
+        price: productPrice,
+        description: productDescription,
+      };
+
+      products.push(newProduct);
+      renderProducts(); // Re-render the product list
+      this.reset(); // Reset form
+    });
+
+    // Navigate to product details page
+    function viewProductDetails(productId) {
+      const product = products.find(p => p.id === productId);
+      localStorage.setItem('selectedProduct', JSON.stringify(product)); // Store product details in localStorage
+      window.location.href = 'vendor-products-description.html'; // Redirect to product details page
+    }
+
+    // Initial render
+    renderProducts();
+  </script>
+
+</body>
+
+</html>
